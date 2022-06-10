@@ -1,0 +1,30 @@
+Messages:
+  Permission: '&7[&6LeaveItems&7] &cУ вас нет прав.'
+  Player: '&7[&6LeaveItems&7] &cКоманду может ввести только игрок.'
+  Use: '&7[&6LeaveItems&7] &cИспользуйте /leaveitems help'
+  Error: '&7[&6LeaveItems&7] &cОшибка! Команда введена не правильно. Используйте /leaveitems help'
+  Command:
+    GiveItem: '&7[&6LeaveItems&7] &fВы &aуспешно &fвыдали игроку &7{player} &fпредмет &e{item}'
+    GiveAmount: '&7[&6LeaveItems&7] &fВы &aуспешно &fвыдали игроку &7{player} &fпредмет &e{item} {amount}x'
+  Others:
+    Cooldown: '&7[&6LeaveItems&7] &cОжидайте {time} секунд, перед тем как использовать.'
+    Online: '&7[&6LeaveItems&7] &cИгрок не в сети.'
+    Found: '&7[&6LeaveItems&7] &cТакого предмета не существует.'
+    Number: '&7[&6LeaveItems&7] &cКоличество должно быть числом.'
+    Reload: '&7[&6LeaveItems&7] &fПлагин &aуспешно &fперезагружен.'
+  Help:
+    - ''
+    - '&e Помощь по плагину &6myLeaveItems &8| &eТекущая версия: &f%version%'
+    - '&8 ▪ &f/leaveitems help'
+    - '&8 ▪ &f/leaveitems give <игрок> <предмет> &7[количество]'
+    - '&8 ▪ &f/leaveitems reload'
+    - ''
+    - '&e Создатель: &6MishaNeYT &f(&9VK: &b@pleasantvkchannel&f)'
+    - ''
+
+SendTitle:
+  Title: '&6Успешно!'
+  SubTitle: '&eВы сбежали с ловушки.'
+
+SendChat:
+  Message: '&7[&6LeaveItems&7] &fВы &aуспешно &fсбежали с ловушки, &cосторожно&f, вы падаете!'

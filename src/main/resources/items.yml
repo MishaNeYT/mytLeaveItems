@@ -1,0 +1,63 @@
+Items:
+  BLAZE_JUMP:
+    Material: BLAZE_ROD
+    # Если у вас версия сервера 1.13+ ставьте всегда 0
+    Data: 0
+    Name: '&6&lОгненная ливлка'
+    Lore:
+      - ''
+      - '&7Тип: &f&lПРЫЖОК'
+      - '&7Высота: &f&l20 блоков&7.'
+      - ''
+      - '&e&n▸ ПКМ, чтобы использовать.'
+    Sound: BLOCK_ANVIL_LAND
+    # Высота
+    Height: 20.0
+    Options:
+      # JUMP | TELEPORT
+      Type: JUMP
+      # Чтобы предмет ломался, после использования
+      Break: true
+      # Свечение предмета
+      Glow: true
+      # Бесконечная прочность
+      Unbreakable: true
+      # Скрыть флаги
+      HideFlags: true
+      # Команды работают от имени консоли
+      Commands:
+        - 'tell {player} Ура! Вы использовали меня.'
+
+  TELEPORT_STICK:
+    Material: STICK
+    Data: 0
+    Name: '&a&lТелепортирующая палка'
+    Lore:
+      - ''
+      - '&7Тип: &f&lТЕЛЕПОРТ'
+      - '&7Высота: &f&l10 блоков&7.'
+      - ''
+      - '&e&n▸ ПКМ, чтобы использовать.'
+    Sound: BLOCK_NOTE_PLING
+    Height: 10.0
+    Options:
+      Type: TELEPORT
+
+  # Типа ливалки из сервера SunRise :D
+  SUNRISE:
+    Material: MAGMA_CREAM
+    Data: 0
+    Name: '&e&lЛивалка'
+    Lore:
+      - ''
+      - '&7Тип: &f&lТЕЛЕПОРТ'
+      - '&7Высота: &f&l200 блоков&7.'
+      - ''
+      - '&e&n▸ ПКМ, чтобы использовать.'
+    Height: 200.0
+    Options:
+      Type: TELEPORT
+      Break: false
+
+# Делайте свои собственные ливалки на свой вкус с помощью
+# указанных примеров сверху :)
