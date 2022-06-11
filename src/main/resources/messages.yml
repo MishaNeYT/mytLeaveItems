@@ -14,12 +14,14 @@ Messages:
     Reload: '&7[&6LeaveItems&7] &fПлагин &aуспешно &fперезагружен.'
   Help:
     - ''
-    - '&e Помощь по плагину &6myLeaveItems &8| &eТекущая версия: &f%version%'
+    - '&8&m----------------------------------------------------'
+    - '&e Помощь по плагину &6mytLeaveItems &8| &eТекущая версия: &f%version%'
     - '&8 ▪ &f/leaveitems help'
     - '&8 ▪ &f/leaveitems give <игрок> <предмет> &7[количество]'
     - '&8 ▪ &f/leaveitems reload'
     - ''
-    - '&e Создатель: &6MishaNeYT &f(&9VK: &b@pleasantvkchannel&f)'
+    - '&e Создатель: &6MishaNeYT &f(&9https://discord.gg/Nz6tNVBN56&f)'
+    - '&8&m----------------------------------------------------'
     - ''
 
 SendTitle:
