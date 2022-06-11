@@ -11,7 +11,7 @@ import ru.mishaneyt.leave.utils.Logger;
 
 import java.util.Map;
 
-public class Main extends JavaPlugin {
+public final class Main extends JavaPlugin {
     private static Main instance;
     private static final Map<Player, Integer> cooldown = Maps.newHashMap();
 

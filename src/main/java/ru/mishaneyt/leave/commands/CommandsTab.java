@@ -35,7 +35,6 @@ public class CommandsTab implements TabCompleter {
                 line.addAll(ConfigManager.getConfigItems().getConfigurationSection("Items").getValues(false).keySet());
             return line;
         }
-
         return null;
     }
 }

@@ -35,19 +35,15 @@ public class ConfigManager {
     }
 
     public static void checkConfigs(Main main) {
-        File config = new File(main.getDataFolder(), "config.yml");
-        File items = new File(main.getDataFolder(), "items.yml");
-        File messages = new File(main.getDataFolder(), "messages.yml");
-
-        if (!config.exists()) {
+        if (!file_config.exists()) {
             main.saveResource("config.yml", false);
             Logger.info("§aКонфигурация config.yml - успешно создан.");
         }
-        if (!items.exists()) {
+        if (!file_items.exists()) {
             main.saveResource("items.yml", false);
             Logger.info("§aКонфигурация items.yml - успешно создан.");
         }
-        if (!messages.exists()) {
+        if (!file_messages.exists()) {
             main.saveResource("messages.yml", false);
             Logger.info("§aКонфигурация messages.yml - успешно создан.");
         }
@@ -59,9 +55,11 @@ public class ConfigManager {
             getConfigItems().load(file_items);
             getConfigMessages().load(file_messages);
 
-            PluginManager pm = Bukkit.getPluginManager();
-            pm.disablePlugin(Main.getInstance());
-            pm.enablePlugin(Main.getInstance());
+            if (ConfigUtils.ADVANCE_RELOAD) {
+                PluginManager pm = Bukkit.getPluginManager();
+                pm.disablePlugin(Main.getInstance());
+                pm.enablePlugin(Main.getInstance());
+            }
 
             p.sendMessage(ConfigUtils.RELOAD);
 

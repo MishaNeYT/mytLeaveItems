@@ -24,8 +24,4 @@ public class Cooldown {
             }
         }.runTaskTimer(Main.getInstance(), 0L, 20L);
     }
-
-    public static void sendMessage(Player p) {
-        p.sendMessage(ConfigUtils.COOLDOWN.replace("{time}", String.valueOf(Main.getCooldown().get(p))));
-    }
 }

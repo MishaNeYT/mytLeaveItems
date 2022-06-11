@@ -6,6 +6,7 @@ import ru.mishaneyt.leave.utils.Utils;
 public class ConfigUtils {
 
     public static boolean FALL_DAMAGE;
+    public static boolean ADVANCE_RELOAD;
     public static boolean ENABLE_TITLE;
     public static boolean ENABLE_CHAT;
     public static boolean ENABLE_COOLDOWN;
@@ -35,6 +36,7 @@ public class ConfigUtils {
 
         // config.yml
         FALL_DAMAGE = config.getBoolean("Settings.FallDamage");
+        ADVANCE_RELOAD = config.getBoolean("Settings.AdvanceReload");
         ENABLE_TITLE = config.getBoolean("Settings.Title");
         ENABLE_CHAT = config.getBoolean("Settings.Chat");
         ENABLE_COOLDOWN = config.getBoolean("Cooldown.Enable");

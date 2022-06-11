@@ -55,7 +55,7 @@ public class Listeners implements Listener {
 
                     if (ConfigUtils.ENABLE_COOLDOWN) {
                         if (Main.getCooldown().containsKey(p)) {
-                            Cooldown.sendMessage(p);
+                            p.sendMessage(ConfigUtils.COOLDOWN.replace("{time}", String.valueOf(Main.getCooldown().get(p))));
                             return;
                         }
 

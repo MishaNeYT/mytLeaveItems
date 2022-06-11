@@ -5,7 +5,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
 import ru.mishaneyt.leave.Main;
 import ru.mishaneyt.leave.config.ConfigManager;
 import ru.mishaneyt.leave.config.ConfigUtils;
@@ -13,7 +12,6 @@ import ru.mishaneyt.leave.utils.ItemUtils;
 import ru.mishaneyt.leave.utils.Utils;
 
 public class Commands implements CommandExecutor {
-
     public Commands(Main main) {
         main.getCommand("leaveitems").setExecutor(this);
         main.getCommand("leaveitems").setTabCompleter(new CommandsTab());
@@ -31,19 +29,16 @@ public class Commands implements CommandExecutor {
         }
 
         Player p = (Player) sender;
-        PluginDescriptionFile version = Main.getInstance().getDescription();
 
         if (args.length == 0) {
-            for (String m : ConfigManager.getConfigMessages().getStringList("Messages.Help"))
-                p.sendMessage(Utils.color(m).replace("%version%", version.getVersion()));
+            Utils.sendHelp(p);
             return true;
         }
 
         // /leaveitems help | reload
         if (args.length == 1) {
             if ("help".equalsIgnoreCase(args[0])) {
-                for (String m : ConfigManager.getConfigMessages().getStringList("Messages.Help"))
-                    p.sendMessage(Utils.color(m).replace("%version%", version.getVersion()));
+                Utils.sendHelp(p);
                 return true;
             }
 
