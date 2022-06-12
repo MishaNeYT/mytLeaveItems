@@ -74,8 +74,8 @@ public class Listeners implements Listener {
                     else if (type.equalsIgnoreCase("TELEPORT"))
                         p.teleport(p.getLocation().clone().add(0, height, 0), PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
                     else {
-                        p.sendMessage("§c[§4LeaveItems§c] §cПроизошла ошибка! Походу тип этого предмета введен не правильно.");
-                        Logger.error("Тип предмета " + p.getName() + " введен не правильно. Исправьте это в конфиге items.yml");
+                        p.sendMessage("§c[§4LeaveItems§c] §cПроизошла ошибка! Тип этого предмета введён не правильно.");
+                        Logger.error("Тип предмета " + p.getName() + " введён не правильно. Исправьте это в конфиге items.yml");
                         return;
                     }
 
