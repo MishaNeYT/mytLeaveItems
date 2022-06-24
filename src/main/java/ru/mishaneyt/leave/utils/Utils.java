@@ -15,6 +15,11 @@ public class Utils {
         return null;
     }
 
+    public static String color(String s) {
+        if (s != null) return s.replace("&", "§");
+        return null;
+    }
+
     public void sendHelp(Player p) {
         for (String m : ConfigManager.getConfigMessages().getStringList("Messages.Help"))
             p.sendMessage(m.replace("&", "§").replace("%version%", Main.getInstance().getDescription().getVersion()));

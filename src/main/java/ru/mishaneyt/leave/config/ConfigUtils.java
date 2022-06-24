@@ -48,8 +48,8 @@ public class ConfigUtils {
         WAIT = config.getInt("Cooldown.Wait");
 
         // messages.yml
-        PREFIX_SUCCESS = messages.getString("Messages.Prefix.Success").replace("&", "§");
-        PREFIX_ERROR = messages.getString("Messages.Prefix.Error").replace("&", "§");
+        PREFIX_SUCCESS = Utils.color(messages.getString("Messages.Prefix.Success"));
+        PREFIX_ERROR = Utils.color(messages.getString("Messages.Prefix.Error"));
 
         PERMISSION = Utils.replace(messages.getString("Messages.Command.Permission"));
         PLAYER = Utils.replace(messages.getString("Messages.Command.Player"));
