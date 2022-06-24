@@ -5,6 +5,7 @@ import ru.mishaneyt.leave.utils.Utils;
 
 public class ConfigUtils {
 
+    // Config.yml
     public static boolean FALL_DAMAGE;
     public static boolean ADVANCE_RELOAD;
     public static boolean ENABLE_TITLE;
@@ -12,25 +13,29 @@ public class ConfigUtils {
     public static boolean ENABLE_COOLDOWN;
     public static int WAIT;
 
+    // Messages.yml
+    public static String PREFIX_SUCCESS;
+    public static String PREFIX_ERROR;
+
     public static String PERMISSION;
     public static String PLAYER;
-    public static String USE;
     public static String ERROR;
-
-    public static String GIVE_ITEM;
-    public static String GIVE_AMOUNT;
-    public static String COOLDOWN;
     public static String RELOAD;
+
+    public static String USE;
     public static String ONLINE;
     public static String FOUND;
     public static String NUMBER;
 
+    public static String GIVE_ITEM;
+    public static String GIVE_AMOUNT;
+
+    public static String COOLDOWN;
+
     public static String TITLE;
     public static String SUBTITLE;
 
-    public static String CHAT;
-
-    public static void load() {
+    public void load() {
         FileConfiguration config = ConfigManager.getConfig();
         FileConfiguration messages = ConfigManager.getConfigMessages();
 
@@ -43,22 +48,25 @@ public class ConfigUtils {
         WAIT = config.getInt("Cooldown.Wait");
 
         // messages.yml
-        PERMISSION = Utils.color(messages.getString("Messages.Permission"));
-        PLAYER = Utils.color(messages.getString("Messages.Player"));
-        USE = Utils.color(messages.getString("Messages.Use"));
-        ERROR = Utils.color(messages.getString("Messages.Error"));
+        PREFIX_SUCCESS = messages.getString("Messages.Prefix.Success").replace("&", "§");
+        PREFIX_ERROR = messages.getString("Messages.Prefix.Error").replace("&", "§");
 
-        GIVE_ITEM = Utils.color(messages.getString("Messages.Command.GiveItem"));
-        GIVE_AMOUNT = Utils.color(messages.getString("Messages.Command.GiveAmount"));
-        COOLDOWN = Utils.color(messages.getString("Messages.Others.Cooldown"));
-        RELOAD = Utils.color(messages.getString("Messages.Others.Reload"));
-        ONLINE = Utils.color(messages.getString("Messages.Others.Online"));
-        FOUND = Utils.color(messages.getString("Messages.Others.Found"));
-        NUMBER = Utils.color(messages.getString("Messages.Others.Number"));
+        PERMISSION = Utils.replace(messages.getString("Messages.Command.Permission"));
+        PLAYER = Utils.replace(messages.getString("Messages.Command.Player"));
+        ERROR = Utils.replace(messages.getString("Messages.Command.Error"));
+        RELOAD = Utils.replace(messages.getString("Messages.Command.Reload"));
 
-        TITLE = Utils.color(messages.getString("SendTitle.Title"));
-        SUBTITLE = Utils.color(messages.getString("SendTitle.SubTitle"));
+        USE = Utils.replace(messages.getString("Messages.Command.Use.Help"));
+        ONLINE = Utils.replace(messages.getString("Messages.Command.Use.Online"));
+        FOUND = Utils.replace(messages.getString("Messages.Command.Use.Found"));
+        NUMBER = Utils.replace(messages.getString("Messages.Command.Use.Number"));
 
-        CHAT = Utils.color(messages.getString("SendChat.Message"));
+        GIVE_ITEM = Utils.replace(messages.getString("Messages.Success.Give"));
+        GIVE_AMOUNT = Utils.replace(messages.getString("Messages.Success.GiveAmount"));
+
+        COOLDOWN = Utils.replace(messages.getString("Messages.Others.Cooldown"));
+
+        TITLE = Utils.replace(messages.getString("Messages.Title.First"));
+        SUBTITLE = Utils.replace(messages.getString("Messages.Title.SubTitle"));
     }
 }

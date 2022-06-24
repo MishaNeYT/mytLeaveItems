@@ -1,4 +1,4 @@
-package ru.mishaneyt.leave.commands;
+package ru.mishaneyt.leave.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

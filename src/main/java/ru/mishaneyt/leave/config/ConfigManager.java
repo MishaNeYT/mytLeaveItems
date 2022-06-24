@@ -7,12 +7,18 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import ru.mishaneyt.leave.Main;
-import ru.mishaneyt.leave.utils.Logger;
+import ru.mishaneyt.leave.logger.Logger;
 
 import java.io.File;
 import java.io.IOException;
 
 public class ConfigManager {
+    private final Main main;
+
+    public ConfigManager(Main main) {
+        this.main = main;
+    }
+
     private static final File file_config = new File(Main.getInstance().getDataFolder(), "config.yml");
     private static final FileConfiguration configuration_config = YamlConfiguration.loadConfiguration(file_config);
 
@@ -34,22 +40,22 @@ public class ConfigManager {
         return configuration_messages;
     }
 
-    public static void checkConfigs(Main main) {
+    public void checkConfigs() {
         if (!file_config.exists()) {
-            main.saveResource("config.yml", false);
+            this.main.saveResource("config.yml", false);
             Logger.info("§aКонфигурация config.yml - успешно создан.");
         }
         if (!file_items.exists()) {
-            main.saveResource("items.yml", false);
+            this.main.saveResource("items.yml", false);
             Logger.info("§aКонфигурация items.yml - успешно создан.");
         }
         if (!file_messages.exists()) {
-            main.saveResource("messages.yml", false);
+            this.main.saveResource("messages.yml", false);
             Logger.info("§aКонфигурация messages.yml - успешно создан.");
         }
     }
 
-    public static void reload(Player p) {
+    public void reload(Player p) {
         try {
             getConfig().load(file_config);
             getConfigItems().load(file_items);
@@ -64,9 +70,7 @@ public class ConfigManager {
             p.sendMessage(ConfigUtils.RELOAD);
 
         } catch (IOException | InvalidConfigurationException ex) {
-            Logger.warning("Не удалось перезагрузить конфиг " + file_config);
-            Logger.warning("Не удалось перезагрузить конфиг " + file_items);
-            Logger.warning("Не удалось перезагрузить конфиг " + file_messages);
+            Logger.error("Не удалось перезагрузить конфигурации..");
         }
     }
 }

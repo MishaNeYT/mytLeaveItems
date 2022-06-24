@@ -12,10 +12,19 @@ import ru.mishaneyt.leave.config.ConfigManager;
 
 import java.util.List;
 
-public class ItemUtils {
+public class ItemBuilder {
+    private final Player player;
+    private final String name_item;
+    private final int amount;
 
-    public static void get(Player t, int amount, String name_item) {
-        ConfigurationSection section = ConfigManager.getConfigItems().getConfigurationSection("Items." + name_item);
+    public ItemBuilder(Player player, String name_item, int amount) {
+        this.player = player;
+        this.name_item = name_item;
+        this.amount = amount;
+    }
+
+    public void get() {
+        ConfigurationSection section = ConfigManager.getConfigItems().getConfigurationSection("Items." + this.name_item);
 
         // Material
         Material material = Material.valueOf(section.getString("Material").toUpperCase());
@@ -24,7 +33,7 @@ public class ItemUtils {
         int data = section.getInt("Data");
 
         // Item
-        ItemStack is = new ItemStack(material, amount, (byte) data);
+        ItemStack is = new ItemStack(material, this.amount, (byte) data);
         ItemMeta im = is.getItemMeta();
 
         // Hide Flag
@@ -37,12 +46,12 @@ public class ItemUtils {
 
         // Name
         String name = section.getString("Name");
-        im.setDisplayName(Utils.color(name));
+        im.setDisplayName(Utils.replace(name));
 
         // Lore
         List<String> l = section.getStringList("Lore");
         List<String> lore = Lists.newArrayList();
-        for (String line : l) lore.add(Utils.color(line));
+        for (String line : l) lore.add(Utils.replace(line));
 
         // Unbreakable
         boolean unbreakable = section.getBoolean("Options.Unbreakable");
@@ -58,6 +67,6 @@ public class ItemUtils {
         }
 
         // Add item in Inventory player
-        t.getInventory().addItem(is);
+        this.player.getInventory().addItem(is);
     }
 }

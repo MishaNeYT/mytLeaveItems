@@ -1,4 +1,4 @@
-package ru.mishaneyt.leave.commands;
+package ru.mishaneyt.leave.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -8,13 +8,17 @@ import org.bukkit.entity.Player;
 import ru.mishaneyt.leave.Main;
 import ru.mishaneyt.leave.config.ConfigManager;
 import ru.mishaneyt.leave.config.ConfigUtils;
-import ru.mishaneyt.leave.utils.ItemUtils;
+import ru.mishaneyt.leave.utils.ItemBuilder;
 import ru.mishaneyt.leave.utils.Utils;
 
 public class Commands implements CommandExecutor {
+    private final Main main;
+
     public Commands(Main main) {
-        main.getCommand("leaveitems").setExecutor(this);
-        main.getCommand("leaveitems").setTabCompleter(new CommandsTab());
+        this.main = main;
+
+        this.main.getCommand("leaveitems").setExecutor(this);
+        this.main.getCommand("leaveitems").setTabCompleter(new CommandsTab());
     }
 
     @Override
@@ -29,22 +33,25 @@ public class Commands implements CommandExecutor {
         }
 
         Player p = (Player) sender;
+        Utils utils = new Utils();
 
         if (args.length == 0) {
-            Utils.sendHelp(p);
+            utils.sendHelp(p);
             return true;
         }
 
         // /leaveitems help | reload
         if (args.length == 1) {
             if ("help".equalsIgnoreCase(args[0])) {
-                Utils.sendHelp(p);
+                utils.sendHelp(p);
                 return true;
             }
 
             else if ("reload".equalsIgnoreCase(args[0])) {
-                ConfigManager.reload(p);
+                ConfigManager configManager = new ConfigManager(this.main);
+                configManager.reload(p);
                 return true;
+
             } else sender.sendMessage(ConfigUtils.ERROR);
         }
 
@@ -59,7 +66,9 @@ public class Commands implements CommandExecutor {
                 }
 
                 if (ConfigManager.getConfigItems().contains("Items." + args[2])) {
-                    ItemUtils.get(t, 1, args[2]);
+                    ItemBuilder itemBuilder = new ItemBuilder(t, args[2], 1);
+
+                    itemBuilder.get();
                     sender.sendMessage(ConfigUtils.GIVE_ITEM
                             .replace("{player}", t.getName())
                             .replace("{item}", args[2]));
@@ -75,7 +84,7 @@ public class Commands implements CommandExecutor {
             if ("give".equalsIgnoreCase(args[0])) {
                 Player t = Bukkit.getPlayer(args[1]);
 
-                if (!Utils.isDouble(args[3])) {
+                if (!utils.isDouble(args[3])) {
                     sender.sendMessage(ConfigUtils.NUMBER);
                     return true;
                 }
@@ -88,7 +97,9 @@ public class Commands implements CommandExecutor {
                 int amount = Integer.parseInt(args[3]);
 
                 if (ConfigManager.getConfigItems().contains("Items." + args[2])) {
-                    ItemUtils.get(t, amount, args[2]);
+                    ItemBuilder itemBuilder = new ItemBuilder(t, args[2], amount);
+
+                    itemBuilder.get();
                     sender.sendMessage(ConfigUtils.GIVE_AMOUNT
                             .replace("{player}", t.getName())
                             .replace("{item}", args[2])

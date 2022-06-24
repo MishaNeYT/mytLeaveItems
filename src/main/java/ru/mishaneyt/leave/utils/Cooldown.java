@@ -6,20 +6,25 @@ import ru.mishaneyt.leave.Main;
 import ru.mishaneyt.leave.config.ConfigUtils;
 
 public class Cooldown {
+    private final Main main;
 
-    public static void addCooldown(Player p) {
-        Main.getCooldown().put(p, ConfigUtils.WAIT);
+    public Cooldown(Main main) {
+        this.main = main;
+    }
+
+    public void addCooldown(Player p) {
+        this.main.getCooldown().put(p, ConfigUtils.WAIT);
 
         new BukkitRunnable() {
             int i = ConfigUtils.WAIT;
 
             public void run() {
-                Main.getCooldown().put(p, this.i);
+                main.getCooldown().put(p, this.i);
                 this.i--;
 
-                if (Main.getCooldown().get(p) == 0) {
+                if (main.getCooldown().get(p) == 0) {
                     cancel();
-                    Main.getCooldown().remove(p);
+                    main.getCooldown().remove(p);
                 }
             }
         }.runTaskTimer(Main.getInstance(), 0L, 20L);
