@@ -24,7 +24,7 @@ public class ItemBuilder {
     }
 
     public void get() {
-        ConfigurationSection section = ConfigManager.getConfigItems().getConfigurationSection("Items." + this.name_item);
+        ConfigurationSection section = ConfigManager.getItems().getConfigurationSection("Items." + this.name_item);
 
         // Material
         Material material = Material.valueOf(section.getString("Material").toUpperCase());

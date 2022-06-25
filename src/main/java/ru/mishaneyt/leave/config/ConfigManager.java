@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import ru.mishaneyt.leave.Main;
 import ru.mishaneyt.leave.logger.Logger;
+import ru.mishaneyt.leave.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,11 +33,11 @@ public class ConfigManager {
         return configuration_config;
     }
 
-    public static FileConfiguration getConfigItems() {
+    public static FileConfiguration getItems() {
         return configuration_items;
     }
 
-    public static FileConfiguration getConfigMessages() {
+    public static FileConfiguration getMessages() {
         return configuration_messages;
     }
 
@@ -58,16 +59,16 @@ public class ConfigManager {
     public void reload(Player p) {
         try {
             getConfig().load(file_config);
-            getConfigItems().load(file_items);
-            getConfigMessages().load(file_messages);
+            getItems().load(file_items);
+            getMessages().load(file_messages);
 
-            if (ConfigUtils.ADVANCE_RELOAD) {
+            if (ConfigManager.getConfig().getBoolean("Settings.AdvanceReload")) {
                 PluginManager pm = Bukkit.getPluginManager();
                 pm.disablePlugin(Main.getInstance());
                 pm.enablePlugin(Main.getInstance());
             }
 
-            p.sendMessage(ConfigUtils.RELOAD);
+            p.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Reload")));
 
         } catch (IOException | InvalidConfigurationException ex) {
             Logger.error("Не удалось перезагрузить конфигурации..");

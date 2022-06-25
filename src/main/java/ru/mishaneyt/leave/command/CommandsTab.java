@@ -32,7 +32,7 @@ public class CommandsTab implements TabCompleter {
 
         else if (args.length == 3) {
             if ("give".equalsIgnoreCase(args[0]))
-                line.addAll(ConfigManager.getConfigItems().getConfigurationSection("Items").getValues(false).keySet());
+                line.addAll(ConfigManager.getItems().getConfigurationSection("Items").getValues(false).keySet());
             return line;
         }
         return null;

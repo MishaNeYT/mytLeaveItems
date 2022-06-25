@@ -3,26 +3,37 @@ package ru.mishaneyt.leave.utils;
 import org.bukkit.entity.Player;
 import ru.mishaneyt.leave.Main;
 import ru.mishaneyt.leave.config.ConfigManager;
-import ru.mishaneyt.leave.config.ConfigUtils;
 
 public class Utils {
+    private final Main main;
+
+    public Utils(Main main) {
+        this.main = main;
+    }
 
     public static String replace(String s) {
+        String success = ConfigManager.getMessages().getString("Messages.Prefix.Success").replace("&", "§");
+        String error = ConfigManager.getMessages().getString("Messages.Prefix.Error").replace("&", "§");
+
         if (s != null)
             return s.replace("&", "§")
-                    .replace("%prefix-success%", ConfigUtils.PREFIX_SUCCESS).replace("%prefix-error%", ConfigUtils.PREFIX_ERROR);
+                    .replace("%prefix-success%", success)
+                    .replace("%prefix-error%", error);
 
         return null;
     }
 
     public static String color(String s) {
-        if (s != null) return s.replace("&", "§");
+        if (s != null)
+            return s.replace("&", "§");
         return null;
     }
 
     public void sendHelp(Player p) {
-        for (String m : ConfigManager.getConfigMessages().getStringList("Messages.Help"))
-            p.sendMessage(m.replace("&", "§").replace("%version%", Main.getInstance().getDescription().getVersion()));
+        String version = this.main.getDescription().getVersion();
+
+        for (String m : ConfigManager.getMessages().getStringList("Messages.Help"))
+            p.sendMessage(m.replace("&", "§").replace("%version%", version));
     }
 
     public boolean isDouble(String s) {

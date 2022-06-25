@@ -15,7 +15,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 import ru.mishaneyt.leave.Main;
 import ru.mishaneyt.leave.config.ConfigManager;
-import ru.mishaneyt.leave.config.ConfigUtils;
 import ru.mishaneyt.leave.utils.Cooldown;
 import ru.mishaneyt.leave.logger.Logger;
 import ru.mishaneyt.leave.utils.Utils;
@@ -46,8 +45,8 @@ public class Listeners implements Listener {
         ItemMeta im = p.getInventory().getItemInMainHand().getItemMeta();
         if (im == null) return;
 
-        for (String items : ConfigManager.getConfigItems().getConfigurationSection("Items").getKeys(false)) {
-            ConfigurationSection section = ConfigManager.getConfigItems().getConfigurationSection("Items." + items);
+        for (String items : ConfigManager.getItems().getConfigurationSection("Items").getKeys(false)) {
+            ConfigurationSection section = ConfigManager.getItems().getConfigurationSection("Items." + items);
 
             String name = section.getString("Name");
             String sound = section.getString("Sound");
@@ -55,11 +54,16 @@ public class Listeners implements Listener {
             double height = section.getInt("Height");
             boolean _break = section.getBoolean("Options.Break");
 
-            if (im.getDisplayName().equals(Utils.replace(name))) {
+            if (im.getDisplayName() == null) {
+                p.sendMessage("§c[§4LeaveItems§c] §cПроизошла ошибка, название предмета не существует (null)");
+                return;
+            }
 
-                if (ConfigUtils.ENABLE_COOLDOWN) {
+            if (im.getDisplayName().equals(Utils.color(name))) {
+
+                if (ConfigManager.getConfig().getBoolean("Cooldown.Enable")) {
                     if (this.main.getCooldown().containsKey(p)) {
-                        p.sendMessage(ConfigUtils.COOLDOWN.replace("{time}", String.valueOf(this.main.getCooldown().get(p))));
+                        p.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Others.Cooldown").replace("{time}", String.valueOf(this.main.getCooldown().get(p)))));
                         return;
                     }
 
@@ -90,11 +94,12 @@ public class Listeners implements Listener {
                 for (String line : section.getStringList("Options.Commands"))
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), line.replace("{player}", p.getName()));
 
-                if (ConfigUtils.ENABLE_TITLE)
-                    p.sendTitle(ConfigUtils.TITLE, ConfigUtils.SUBTITLE);
+                if (ConfigManager.getConfig().getBoolean("Settings.Title"))
+                    p.sendTitle(Utils.color(ConfigManager.getMessages().getString("Messages.First")),
+                            Utils.color(ConfigManager.getMessages().getString("Messages.SubTitle")));
 
-                if (ConfigUtils.ENABLE_CHAT)
-                    for (String m : ConfigManager.getConfigMessages().getStringList("Messages.Chat.Message"))
+                if (ConfigManager.getConfig().getBoolean("Settings.Chat"))
+                    for (String m : ConfigManager.getMessages().getStringList("Messages.Chat.Message"))
                         p.sendMessage(Utils.replace(m));
 
                 this.damage.add(p);
@@ -106,7 +111,7 @@ public class Listeners implements Listener {
     public void onFall(EntityDamageEvent e) {
 
         if (e.getEntity() instanceof Player) {
-            if (ConfigUtils.FALL_DAMAGE) return;
+            if (ConfigManager.getConfig().getBoolean("Settings.FallDamage")) return;
 
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
                 Player p = (Player) e.getEntity();

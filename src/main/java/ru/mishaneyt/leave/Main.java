@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.mishaneyt.leave.command.Commands;
 import ru.mishaneyt.leave.config.ConfigManager;
-import ru.mishaneyt.leave.config.ConfigUtils;
 import ru.mishaneyt.leave.listeners.Listeners;
 import ru.mishaneyt.leave.logger.Logger;
 
@@ -23,9 +22,6 @@ public final class Main extends JavaPlugin {
 
         ConfigManager configManager = new ConfigManager(this);
         configManager.checkConfigs();
-
-        ConfigUtils configUtils = new ConfigUtils();
-        configUtils.load();
 
         new Commands(this);
         new Listeners(this);

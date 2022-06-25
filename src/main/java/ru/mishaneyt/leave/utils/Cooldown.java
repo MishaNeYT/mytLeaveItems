@@ -3,7 +3,7 @@ package ru.mishaneyt.leave.utils;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import ru.mishaneyt.leave.Main;
-import ru.mishaneyt.leave.config.ConfigUtils;
+import ru.mishaneyt.leave.config.ConfigManager;
 
 public class Cooldown {
     private final Main main;
@@ -13,10 +13,10 @@ public class Cooldown {
     }
 
     public void addCooldown(Player p) {
-        this.main.getCooldown().put(p, ConfigUtils.WAIT);
+        this.main.getCooldown().put(p, ConfigManager.getConfig().getInt("Cooldown.Wait"));
 
         new BukkitRunnable() {
-            int i = ConfigUtils.WAIT;
+            int i = ConfigManager.getConfig().getInt("Cooldown.Wait");
 
             public void run() {
                 main.getCooldown().put(p, this.i);
@@ -27,6 +27,6 @@ public class Cooldown {
                     main.getCooldown().remove(p);
                 }
             }
-        }.runTaskTimer(Main.getInstance(), 0L, 20L);
+        }.runTaskTimer(this.main, 0L, 20L);
     }
 }
