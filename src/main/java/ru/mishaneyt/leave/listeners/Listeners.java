@@ -34,9 +34,6 @@ public class Listeners implements Listener {
 
     @EventHandler
     public void onClick(PlayerInteractEvent e) {
-        if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
-        if (e.getItem() == null) return;
-
         Player p = e.getPlayer();
 
         ItemStack is = e.getItem();
@@ -54,55 +51,53 @@ public class Listeners implements Listener {
             double height = section.getInt("Height");
             boolean _break = section.getBoolean("Options.Break");
 
-            if (im.getDisplayName() == null) {
-                p.sendMessage("§c[§4LeaveItems§c] §cПроизошла ошибка, название предмета не существует (null)");
-                return;
-            }
+            if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (im.getDisplayName() == null) return;
+                if (im.getDisplayName().equals(Utils.color(name))) {
 
-            if (im.getDisplayName().equals(Utils.color(name))) {
+                    if (ConfigManager.getConfig().getBoolean("Cooldown.Enable")) {
+                        if (this.main.getCooldown().containsKey(p)) {
+                            p.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Others.Cooldown").replace("{time}", String.valueOf(this.main.getCooldown().get(p)))));
+                            return;
+                        }
 
-                if (ConfigManager.getConfig().getBoolean("Cooldown.Enable")) {
-                    if (this.main.getCooldown().containsKey(p)) {
-                        p.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Others.Cooldown").replace("{time}", String.valueOf(this.main.getCooldown().get(p)))));
+                        Cooldown cooldown = new Cooldown(this.main);
+                        cooldown.addCooldown(p);
+                    }
+
+                    if (_break)
+                        is.setAmount(is.getAmount() - 1);
+
+                    if (!section.isBoolean("Options.Break"))
+                        is.setAmount(is.getAmount() - 1);
+
+                    if (type.equalsIgnoreCase("JUMP"))
+                        p.setVelocity(new Vector(0, height / 10, 0));
+
+                    else if (type.equalsIgnoreCase("TELEPORT"))
+                        p.teleport(p.getLocation().clone().add(0, height, 0), PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
+                    else {
+                        p.sendMessage("§c[§4LeaveItems§c] §cПроизошла ошибка! Тип этого предмета введён не правильно.");
+                        Logger.error("Тип предмета " + p.getName() + " введён не правильно. Исправьте это в конфиге items.yml");
                         return;
                     }
 
-                    Cooldown cooldown = new Cooldown(this.main);
-                    cooldown.addCooldown(p);
+                    if (sound != null)
+                        p.playSound(p.getLocation(), Sound.valueOf(sound), 1, 1);
+
+                    for (String line : section.getStringList("Options.Commands"))
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), line.replace("{player}", p.getName()));
+
+                    if (ConfigManager.getConfig().getBoolean("Settings.Title"))
+                        p.sendTitle(Utils.color(ConfigManager.getMessages().getString("Messages.First")),
+                                Utils.color(ConfigManager.getMessages().getString("Messages.SubTitle")));
+
+                    if (ConfigManager.getConfig().getBoolean("Settings.Chat"))
+                        for (String m : ConfigManager.getMessages().getStringList("Messages.Chat.Message"))
+                            p.sendMessage(Utils.replace(m));
+
+                    this.damage.add(p);
                 }
-
-                if (_break)
-                    is.setAmount(is.getAmount() - 1);
-
-                if (!section.isBoolean("Options.Break"))
-                    is.setAmount(is.getAmount() - 1);
-
-                if (type.equalsIgnoreCase("JUMP"))
-                    p.setVelocity(new Vector(0, height / 10, 0));
-
-                else if (type.equalsIgnoreCase("TELEPORT"))
-                    p.teleport(p.getLocation().clone().add(0, height, 0), PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
-                else {
-                    p.sendMessage("§c[§4LeaveItems§c] §cПроизошла ошибка! Тип этого предмета введён не правильно.");
-                    Logger.error("Тип предмета " + p.getName() + " введён не правильно. Исправьте это в конфиге items.yml");
-                    return;
-                }
-
-                if (sound != null)
-                    p.playSound(p.getLocation(), Sound.valueOf(sound), 1, 1);
-
-                for (String line : section.getStringList("Options.Commands"))
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), line.replace("{player}", p.getName()));
-
-                if (ConfigManager.getConfig().getBoolean("Settings.Title"))
-                    p.sendTitle(Utils.color(ConfigManager.getMessages().getString("Messages.First")),
-                            Utils.color(ConfigManager.getMessages().getString("Messages.SubTitle")));
-
-                if (ConfigManager.getConfig().getBoolean("Settings.Chat"))
-                    for (String m : ConfigManager.getMessages().getStringList("Messages.Chat.Message"))
-                        p.sendMessage(Utils.replace(m));
-
-                this.damage.add(p);
             }
         }
     }
