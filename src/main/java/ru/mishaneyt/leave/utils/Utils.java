@@ -24,8 +24,7 @@ public class Utils {
     }
 
     public static String color(String s) {
-        if (s != null)
-            return s.replace("&", "§");
+        if (s != null) return s.replace("&", "§");
         return null;
     }
 

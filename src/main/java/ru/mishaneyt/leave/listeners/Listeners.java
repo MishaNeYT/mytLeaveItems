@@ -28,8 +28,6 @@ public class Listeners implements Listener {
 
     public Listeners(Main main) {
         this.main = main;
-
-        Bukkit.getPluginManager().registerEvents(this, main);
     }
 
     @EventHandler
@@ -44,6 +42,7 @@ public class Listeners implements Listener {
 
         for (String items : ConfigManager.getItems().getConfigurationSection("Items").getKeys(false)) {
             ConfigurationSection section = ConfigManager.getItems().getConfigurationSection("Items." + items);
+            if (section == null) return;
 
             String name = section.getString("Name");
             String sound = section.getString("Sound");

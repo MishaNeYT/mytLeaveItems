@@ -15,9 +15,6 @@ public class Commands implements CommandExecutor {
 
     public Commands(Main main) {
         this.main = main;
-
-        this.main.getCommand("leaveitems").setExecutor(this);
-        this.main.getCommand("leaveitems").setTabCompleter(new CommandsTab());
     }
 
     @Override
@@ -26,12 +23,13 @@ public class Commands implements CommandExecutor {
             sender.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Player")));
             return true;
         }
-        if (!sender.hasPermission("leaveitems.use")) {
-            sender.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Permission")));
+
+        Player p = (Player) sender;
+        if (!p.hasPermission("leaveitems.use")) {
+            p.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Permission")));
             return true;
         }
 
-        Player p = (Player) sender;
         Utils utils = new Utils(this.main);
 
         if (args.length == 0) {
@@ -48,7 +46,7 @@ public class Commands implements CommandExecutor {
 
             else if ("reload".equalsIgnoreCase(args[0])) {
                 ConfigManager configManager = new ConfigManager(this.main);
-                configManager.reload(p);
+                configManager.reloadPlugin(p);
                 return true;
 
             } else sender.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Error")));
@@ -107,7 +105,7 @@ public class Commands implements CommandExecutor {
 
                 } else sender.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Use.Found")));
             } else sender.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Error")));
-        } else sender.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Help")));
+        } else utils.sendHelp(p);
         return false;
     }
 }

@@ -25,15 +25,18 @@ public class CommandsTab implements TabCompleter {
 
         else if (args.length == 2) {
             if ("give".equalsIgnoreCase(args[0]))
-                for (Player all : Bukkit.getServer().getOnlinePlayers())
+                for (Player all : Bukkit.getServer().getOnlinePlayers()) {
                     line.add(all.getName());
-            return line;
+                    return line;
+                }
         }
 
         else if (args.length == 3) {
-            if ("give".equalsIgnoreCase(args[0]))
-                line.addAll(ConfigManager.getItems().getConfigurationSection("Items").getValues(false).keySet());
-            return line;
+            if ("give".equalsIgnoreCase(args[0])) {
+                if (ConfigManager.getItems().getConfigurationSection("Items") != null)
+                    line.addAll(ConfigManager.getItems().getConfigurationSection("Items").getValues(false).keySet());
+                return line;
+            }
         }
         return null;
     }

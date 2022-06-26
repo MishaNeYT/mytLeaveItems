@@ -2,6 +2,7 @@ Messages:
   Prefix:
     Success: '&8[&6LeaveItems&8]'
     Error: '&8[&cLeaveItems&8]'
+
   Help:
     - ''
     - '&8&m----------------------------------------------------'
@@ -13,24 +14,30 @@ Messages:
     - '&e Создатель: &6MishaNeYT &f(&9https://discord.gg/Nz6tNVBN56&f)'
     - '&8&m----------------------------------------------------'
     - ''
+
   Command:
     Permission: '%prefix-error% &cУ вас нет прав.'
     Player: '%prefix-error% &cКоманду может ввести только игрок.'
     Error: '%prefix-error% &cОшибка! Команда введена не правильно. Используйте /leaveitems help'
     Reload: '%prefix-success% &fПлагин &aуспешно &fперезагружен.'
+
     Use:
       Help: '%prefix-error% &cИспользуйте /leaveitems help'
       Online: '%prefix-error% &cИгрок не в сети.'
       Found: '%prefix-error% &cТакого предмета не существует.'
       Number: '%prefix-error% &cКоличество должно быть числом.'
+
   Success:
     Give: '%prefix-success% &fВы &aуспешно &fвыдали игроку &7{player} &fпредмет &e{item}'
     GiveAmount: '%prefix-success% &fВы &aуспешно &fвыдали игроку &7{player} &fпредмет &e{item} {amount}x'
+
   Others:
     Cooldown: '%prefix-success% &fОжидайте &6{time} &fсекунд, перед тем как использовать.'
+
   Title:
     First: '&6Успешно!'
     SubTitle: '&eВы сбежали с ловушки.'
+
   Chat:
     Message:
       - ''

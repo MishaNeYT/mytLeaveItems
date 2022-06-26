@@ -21,27 +21,27 @@ public class ConfigManager {
     }
 
     private static final File file_config = new File(Main.getInstance().getDataFolder(), "config.yml");
-    private static final FileConfiguration configuration_config = YamlConfiguration.loadConfiguration(file_config);
+    private static final FileConfiguration config = YamlConfiguration.loadConfiguration(file_config);
 
     private static final File file_items = new File(Main.getInstance().getDataFolder(), "items.yml");
-    private static final FileConfiguration configuration_items = YamlConfiguration.loadConfiguration(file_items);
+    private static final FileConfiguration items = YamlConfiguration.loadConfiguration(file_items);
 
     private static final File file_messages = new File(Main.getInstance().getDataFolder(), "messages.yml");
-    private static final FileConfiguration configuration_messages = YamlConfiguration.loadConfiguration(file_messages);
+    private static final FileConfiguration messages = YamlConfiguration.loadConfiguration(file_messages);
 
     public static FileConfiguration getConfig() {
-        return configuration_config;
+        return config;
     }
 
     public static FileConfiguration getItems() {
-        return configuration_items;
+        return items;
     }
 
     public static FileConfiguration getMessages() {
-        return configuration_messages;
+        return messages;
     }
 
-    public void checkConfigs() {
+    public void checkConfigurations() {
         if (!file_config.exists()) {
             this.main.saveResource("config.yml", false);
             Logger.info("§aКонфигурация config.yml - успешно создан.");
@@ -56,16 +56,44 @@ public class ConfigManager {
         }
     }
 
-    public void reload(Player p) {
+    public void saveConfigs() {
+        try {
+            getConfig().save(file_config);
+            getItems().save(file_items);
+            getMessages().save(file_messages);
+
+        } catch (IOException ex) {
+            Logger.error("Не удалось сохранить конфигурации..");
+        }
+    }
+
+    public void reloadEnable() {
+        this.checkConfigurations();
+
         try {
             getConfig().load(file_config);
             getItems().load(file_items);
             getMessages().load(file_messages);
+            saveConfigs();
+
+        } catch (IOException | InvalidConfigurationException ex) {
+            Logger.error("Не удалось перезагрузить конфигурации..");
+        }
+    }
+
+    public void reloadPlugin(Player p) {
+        this.checkConfigurations();
+
+        try {
+            getConfig().load(file_config);
+            getItems().load(file_items);
+            getMessages().load(file_messages);
+            saveConfigs();
 
             if (ConfigManager.getConfig().getBoolean("Settings.AdvanceReload")) {
                 PluginManager pm = Bukkit.getPluginManager();
-                pm.disablePlugin(Main.getInstance());
-                pm.enablePlugin(Main.getInstance());
+                pm.disablePlugin(this.main);
+                pm.enablePlugin(this.main);
             }
 
             p.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Reload")));
