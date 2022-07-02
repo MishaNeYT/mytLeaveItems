@@ -19,34 +19,28 @@ public class Commands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Player")));
-            return true;
-        }
-
-        Player p = (Player) sender;
-        if (!p.hasPermission("leaveitems.use")) {
-            p.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Permission")));
+        if (!sender.hasPermission("leaveitems.use")) {
+            sender.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Permission")));
             return true;
         }
 
         Utils utils = new Utils(this.main);
 
         if (args.length == 0) {
-            utils.sendHelp(p);
+            utils.sendHelp(sender);
             return true;
         }
 
         // /leaveitems help | reload
         if (args.length == 1) {
             if ("help".equalsIgnoreCase(args[0])) {
-                utils.sendHelp(p);
+                utils.sendHelp(sender);
                 return true;
             }
 
             else if ("reload".equalsIgnoreCase(args[0])) {
                 ConfigManager configManager = new ConfigManager(this.main);
-                configManager.reloadPlugin(p);
+                configManager.reloadPlugin(sender);
                 return true;
 
             } else sender.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Error")));
@@ -105,7 +99,7 @@ public class Commands implements CommandExecutor {
 
                 } else sender.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Use.Found")));
             } else sender.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Error")));
-        } else utils.sendHelp(p);
+        } else utils.sendHelp(sender);
         return false;
     }
 }

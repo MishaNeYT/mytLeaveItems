@@ -17,7 +17,6 @@ Messages:
 
   Command:
     Permission: '%prefix-error% &cУ вас нет прав.'
-    Player: '%prefix-error% &cКоманду может ввести только игрок.'
     Error: '%prefix-error% &cОшибка! Команда введена не правильно. Используйте /leaveitems help'
     Reload: '%prefix-success% &fПлагин &aуспешно &fперезагружен.'
 

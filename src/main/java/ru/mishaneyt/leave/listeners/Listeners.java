@@ -16,7 +16,7 @@ import org.bukkit.util.Vector;
 import ru.mishaneyt.leave.Main;
 import ru.mishaneyt.leave.config.ConfigManager;
 import ru.mishaneyt.leave.utils.Cooldown;
-import ru.mishaneyt.leave.logger.Logger;
+import ru.mishaneyt.leave.utils.Logger;
 import ru.mishaneyt.leave.utils.Utils;
 
 import java.util.ArrayList;
@@ -84,8 +84,17 @@ public class Listeners implements Listener {
                     if (sound != null)
                         p.playSound(p.getLocation(), Sound.valueOf(sound), 1, 1);
 
-                    for (String line : section.getStringList("Options.Commands"))
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), line.replace("{player}", p.getName()));
+                    for (String line : section.getStringList("Options.Commands")) {
+                        if (line.startsWith("player:")) {
+                            line = line.replaceFirst("player:", "");
+                            Bukkit.dispatchCommand(p, line.replace("{player}", p.getName()));
+                        }
+                        else if (line.startsWith("console:")) {
+                            line = line.replaceFirst("console:", "");
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), line.replace("{player}", p.getName()));
+                        }
+                        else Bukkit.dispatchCommand(Bukkit.getConsoleSender(), line.replace("{player}", p.getName()));
+                    }
 
                     if (ConfigManager.getConfig().getBoolean("Settings.Title"))
                         p.sendTitle(Utils.color(ConfigManager.getMessages().getString("Messages.First")),

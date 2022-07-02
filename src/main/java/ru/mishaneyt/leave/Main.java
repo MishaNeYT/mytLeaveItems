@@ -9,7 +9,7 @@ import ru.mishaneyt.leave.command.Commands;
 import ru.mishaneyt.leave.command.CommandsTab;
 import ru.mishaneyt.leave.config.ConfigManager;
 import ru.mishaneyt.leave.listeners.Listeners;
-import ru.mishaneyt.leave.logger.Logger;
+import ru.mishaneyt.leave.utils.Logger;
 
 import java.util.Map;
 
@@ -24,7 +24,7 @@ public final class Main extends JavaPlugin {
 
         // Check configs and load
         ConfigManager configManager = new ConfigManager(this);
-        configManager.reloadEnable();
+        configManager.loadConfigurations();
 
         // Register command and tab
         getCommand("leaveitems").setExecutor(new Commands(this));

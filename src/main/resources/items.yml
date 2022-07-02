@@ -26,9 +26,11 @@ Items:
       Unbreakable: true
       # Скрыть флаги (Типа: Неразрушимость)
       HideFlags: true
-      # Команды работают только от имени консоли
+      # console - написать команду от имени консоли
+      # player - написать команду от имени игрока, который использовал предмет
       Commands:
-        - 'tell {player} Ура! Вы использовали меня.'
+        - 'player: me {player} Ура! Вы использовали меня.'
+        - 'console: me {player} Ура! Вы использовали меня.'
 
   TELEPORT_STICK:
     Material: STICK

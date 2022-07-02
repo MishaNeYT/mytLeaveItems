@@ -1,13 +1,13 @@
 package ru.mishaneyt.leave.config;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import ru.mishaneyt.leave.Main;
-import ru.mishaneyt.leave.logger.Logger;
+import ru.mishaneyt.leave.utils.Logger;
 import ru.mishaneyt.leave.utils.Utils;
 
 import java.io.File;
@@ -67,7 +67,7 @@ public class ConfigManager {
         }
     }
 
-    public void reloadEnable() {
+    public void loadConfigurations() {
         this.checkConfigurations();
 
         try {
@@ -81,7 +81,7 @@ public class ConfigManager {
         }
     }
 
-    public void reloadPlugin(Player p) {
+    public void reloadPlugin(CommandSender sender) {
         this.checkConfigurations();
 
         try {
@@ -96,7 +96,7 @@ public class ConfigManager {
                 pm.enablePlugin(this.main);
             }
 
-            p.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Reload")));
+            sender.sendMessage(Utils.replace(ConfigManager.getMessages().getString("Messages.Command.Reload")));
 
         } catch (IOException | InvalidConfigurationException ex) {
             Logger.error("Не удалось перезагрузить конфигурации..");

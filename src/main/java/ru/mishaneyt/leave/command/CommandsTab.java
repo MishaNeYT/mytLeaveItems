@@ -24,11 +24,11 @@ public class CommandsTab implements TabCompleter {
         }
 
         else if (args.length == 2) {
-            if ("give".equalsIgnoreCase(args[0]))
-                for (Player all : Bukkit.getServer().getOnlinePlayers()) {
+            if ("give".equalsIgnoreCase(args[0])) {
+                for (Player all : Bukkit.getOnlinePlayers())
                     line.add(all.getName());
-                    return line;
-                }
+                return line;
+            }
         }
 
         else if (args.length == 3) {

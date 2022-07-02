@@ -1,6 +1,6 @@
 package ru.mishaneyt.leave.utils;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 import ru.mishaneyt.leave.Main;
 import ru.mishaneyt.leave.config.ConfigManager;
 
@@ -28,11 +28,11 @@ public class Utils {
         return null;
     }
 
-    public void sendHelp(Player p) {
+    public void sendHelp(CommandSender sender) {
         String version = this.main.getDescription().getVersion();
 
         for (String m : ConfigManager.getMessages().getStringList("Messages.Help"))
-            p.sendMessage(m.replace("&", "§").replace("%version%", version));
+            sender.sendMessage(m.replace("&", "§").replace("%version%", version));
     }
 
     public boolean isDouble(String s) {

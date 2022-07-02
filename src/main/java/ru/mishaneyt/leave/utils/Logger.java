@@ -1,4 +1,4 @@
-package ru.mishaneyt.leave.logger;
+package ru.mishaneyt.leave.utils;
 
 import org.bukkit.Bukkit;
 
